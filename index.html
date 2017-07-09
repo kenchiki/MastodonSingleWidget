@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="http://widget.nagoyadon.jp/widget.js"></script>
+<link rel="stylesheet" href="http://widget.nagoyadon.jp/widget.css" />
+
+<style>
+body {
+	padding: 50px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>Mastodon widget generator (alpha)</h1>
+
+<p>トゥートのURLを入れてください：</p>
+<input type="text" id="toot_url" size="50" placeholder="https://your.instance.tld/web/statuses/123456">
+<button type="button" id="generate">生成</button>
+
+
+
+
+<p>このコードを貼り付けてください：</p>
+<textarea id="output" cols="75" rows="10"></textarea>
+
+
+<p>プレビュー：</p>
+<div id="preview"></div>
+
+
+
+
+<p>制限事項</p>
+<ul>
+	<li>添付画像に対応していません</li>
+	<li>ハッシュタグ、リンク、@に対応していません</li>
+	<li>CW、NSFWに対応していません</li>
+	<li>日付時刻のフォーマットが出来ていません(UTCで表示されています)</li>
+</ul>
+
+<p>おことわり</p>
+<ul>
+	<li>開発中のため、予告なくサービス中断・停止・仕様変更が行われる場合があります。</li>
+	<li>ご意見・ご要望は、くま(<a href="https://nagoyadon.jp/@kumasun">@kumasun@nagoyadon.jp</a>)まで。</li>
+</ul>
+
+<p>スペシャルサンクス</p>
+（敬称略）
+<ul>
+	<li>けんちき (<a href="https://gingadon.com/@panda_planet">@panda_planet@gingadon.com</a>)</li>
+</ul>
+
+
+
+
+<script language="Javascript">
+$(function() {
+
+  // 生成ボタン押下イベント
+  $('#generate').click(function(e) {
+	var toot_url = $("#toot_url").val();
+	
+	if(toot_url == "") { $("#output").val("エラー：トゥートURLが空白です"); return; }
+	
+	var reg = /^(https?):\/\/(.+)\/(web\/statuses|@.+)\/(\d+)$/i; // URLマッチする正規表現
+	var regary = toot_url.match(reg);
+	if(regary == null) { $("#output").val("エラー：トゥートURLが不正です"); return; }
+	
+	regary.shift();
+	
+	var protocol = regary[0];
+	var domain = regary[1];
+	var id = regary[3];
+	
+	
+	var apiuri = protocol + "://" + domain + "/api/v1/statuses/" + id;
+	
+	$.getJSON(apiuri , function(){
+		// init
+	})
+	.done(function(data) {
+		console.log(data);
+		//alert(data);
+		
+		var output =  $('<mstdn-toot></mstdn-toot>');
+        output.attr('data-lang',  data.language);
+        output.attr('acct',  data.account.acct);
+        output.attr('domain',  domain);
+        output.attr('display-name',  data.account.display_name);
+        output.attr('created-at',  data.created_at);
+        output.attr('avatar',  data.account.avatar);
+        output.html(data.content);
+
+		var script = "\n" + '<script src="http://widget.nagoyadon.jp/widget.js">' + "<\/script>";
+
+		
+		$("#output").val(output.prop('outerHTML') + script);
+		
+		// プレビュー描画
+		$("#preview").empty();
+		$("#preview").append(output);
+		initMstdnWidget();
+	})
+	.fail(function(jqXHR, textStatus, errorThrown) {
+		// 何らかの理由で失敗した場合
+		$("#output").val("エラー：トゥート取得失敗。\nトゥートが消されていませんか？\n非収載、非公開、DMではありませんか？");
+		
+		// プレビュークリア
+		$("#preview").empty();
+		console.log("エラー：" + textStatus);
+		console.log("テキスト：" + jqXHR.responseText);
+	});
+  
+  });
+});
+
+
+</script>
+
+
+</body>
+</html>

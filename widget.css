@@ -1,0 +1,63 @@
+
+mstdn-toot  {
+	display: block;
+
+}
+.mastodonWidget {
+	border: solid 1px #2b90d9;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	margin-top: 20px;
+	padding: 0px 20px;
+	
+	width: 500px;
+}
+.mastodonWidget-col {
+	overflow: hidden;
+	font-size: 90%;
+}
+.mastodonWidget-pic {
+	float: left;
+	width: 50px;
+}
+.mastodonWidget-pic img {
+	width: 100%;
+	height: auto;
+	
+	border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+.mastodonWidget-prof {
+	float: left;
+	width: auto;
+	padding-left: 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.mastodonWidget-id {
+	display: block;
+	margin-top: 5px;
+}
+.mastodonWidget-id a {
+	color: #999;
+	text-decoration: none;
+}
+
+.mastodonWidget-content {
+	margin-top: 10px;
+}
+
+.mastodonWidget-content p {
+	margin-top: 0px;
+}
+
+.mastodonWidget-date {
+	color: #999;
+	margin-top: 10px;
+	font-size: 80%;
+}
