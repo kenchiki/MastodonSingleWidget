@@ -12,33 +12,6 @@ if (!document.getElementById(cssId))
 }
 
 
-
-function __create_tag(tag_name) {
-    return document.createElement(tag_name);
-}
-
-function __add_attr(tag, attr, value) {
-    //tag[attr] = value;
-	tag.setAttribute(attr, value);
-}
-
-function __add_class(tag, attr, value) {
-    tag.className = value;
-}
-
-function __update_html(tag, value) {
-    tag.innerHTML = value;
-}
-function __append_child(p, c) {
-    p.appendChild(c);
-}
-
-function __selector_tag(tag_name) {
-    return document.getElementsByTagName(tag_name);
-}
-
-
-
 // 読み込まれイベント
 // オールドスクールな感じ
 function initMstdnWidget(){
@@ -71,17 +44,17 @@ function initMstdnWidget(){
 		
         widget.innerHTML = output; 
 		
-		// ★書き出し
-        var pic = __create_tag('img');
-        __add_attr(pic, 'src', avatar);
-        __append_child(widget.querySelector(".mastodonWidget-pic"), pic);
-        __update_html(widget.querySelector(".mastodonWidget-name"), displayName);
-        __update_html(widget.querySelector(".mastodonWidget-id"), '<a href="https://' + domain + '/@' + acct + '">' + '@' + acct + '</a>');
-        __update_html(widget.querySelector(".mastodonWidget-content"), content);
-        __update_html(widget.querySelector(".mastodonWidget-date"), createdAt);
+		// ★書き出し		
+        var pic = document.createElement('img');
+		pic.setAttribute('src', avatar);
+        widget.querySelector(".mastodonWidget-pic").appendChild(pic);
+        widget.querySelector(".mastodonWidget-name").innerHTML = displayName;
+        widget.querySelector(".mastodonWidget-id").innerHTML =  '<a href="https://' + domain + '/@' + acct + '">' + '@' + acct + '</a>';
+        widget.querySelector(".mastodonWidget-content").innerHTML =  content;
+        widget.querySelector(".mastodonWidget-date").innerHTML =  createdAt;
 		
 		// ★「書き出し済み」フラグを付与(もうちょっと何とかしたい)
-		__add_attr(widget, 'exp', 'true');
+		widget.setAttribute('exp', 'true');
 	}
 	
 }
