@@ -42,16 +42,16 @@ function initMstdnWidget(){
 		content		= widget.innerHTML;
 		
 		
-        widget.innerHTML = output; 
+		widget.innerHTML = output; 
 		
 		// ★書き出し		
-        var pic = document.createElement('img');
+		var pic = document.createElement('img');
 		pic.setAttribute('src', avatar);
-        widget.querySelector(".mastodonWidget-pic").appendChild(pic);
-        widget.querySelector(".mastodonWidget-name").innerHTML = displayName;
-        widget.querySelector(".mastodonWidget-id").innerHTML =  '<a href="https://' + domain + '/@' + acct + '">' + '@' + acct + '</a>';
-        widget.querySelector(".mastodonWidget-content").innerHTML =  content;
-        widget.querySelector(".mastodonWidget-date").innerHTML =  createdAt;
+		widget.querySelector(".mastodonWidget-pic").appendChild(pic);
+		widget.querySelector(".mastodonWidget-name").innerHTML = displayName;
+		widget.querySelector(".mastodonWidget-id").innerHTML =  '<a href="https://' + domain + '/@' + acct + '">' + '@' + acct + '</a>';
+		widget.querySelector(".mastodonWidget-content").innerHTML =  content;
+		widget.querySelector(".mastodonWidget-date").innerHTML =  createdAt;
 		
 		// ★「書き出し済み」フラグを付与(もうちょっと何とかしたい)
 		widget.setAttribute('exp', 'true');
