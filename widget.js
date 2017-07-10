@@ -18,7 +18,8 @@ function __create_tag(tag_name) {
 }
 
 function __add_attr(tag, attr, value) {
-    tag[attr] = value;
+    //tag[attr] = value;
+	tag.setAttribute(attr, value);
 }
 
 function __add_class(tag, attr, value) {
@@ -56,6 +57,9 @@ function initMstdnWidget(){
 	for(var i=0; i < widgets.length; i++) {
 		widget = widgets[i];
 		
+		// 書き出し済みフラグが立っていたら無視
+		if(widget.getAttribute("exp") == "true") { continue; }
+
 		// データの取得
 		acct		= widget.getAttribute("acct");
 		domain		= widget.getAttribute("domain");
@@ -76,7 +80,8 @@ function initMstdnWidget(){
         __update_html(widget.querySelector(".mastodonWidget-content"), content);
         __update_html(widget.querySelector(".mastodonWidget-date"), createdAt);
 		
-		
+		// ★「書き出し済み」フラグを付与(もうちょっと何とかしたい)
+		__add_attr(widget, 'exp', 'true');
 	}
 	
 }
